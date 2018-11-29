@@ -4,7 +4,7 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 
 from flask import Flask
 from flask import render_template
-from db.employee_model import db
+
 
 app = Flask(__name__)
 POSTGRES = {
@@ -15,7 +15,6 @@ POSTGRES = {
         'port': '5432',
     }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
-db.init_app(app)
 
 @app.route('/')
 def main():

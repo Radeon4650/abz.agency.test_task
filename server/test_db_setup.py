@@ -3,10 +3,10 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 
 from faker import Faker
-from .employee_model import db, Employee
+
+from db import Session, init_test_db, Employee
 
 fake = Faker('ru_RU')
-
 
 def create_random_employee(chief=None):
     username = fake.name()
@@ -24,19 +24,25 @@ def create_random_employee(chief=None):
                     chief=chief, login=login, pwd=pwd, user_pic=user_pic)
 
 
-def init_test_db(app):
-    db.create_all()
 
-
-def add_random_employees(app, count=1):
-    db.init_app(app)
+def add_random_employees(count=1):
+    session = Session()
     for i in range(count):
         employee = create_random_employee()
-        db.session.add(employee)
-    db.session.commit()
+        session.add(employee)
+    session.commit()
 
-def get_test_employees(app, count=None):
+def get_test_employees(count=None):
+    session = Session()
     if count is None:
-        return Employee.query.all()
+        return session.query(Employee).all()
     else:
-        return Employee.query.limit(count).all()
+        return session.query(Employee).limit(count).all()
+
+
+if __name__ == '__main__':
+    print("starting...")
+    # init_test_db()
+    add_random_employees(100)
+    for e in get_test_employees():
+        print(e.username)
