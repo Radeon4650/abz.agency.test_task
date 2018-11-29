@@ -5,6 +5,23 @@
     <title>Our employees</title>
 </head>
 <body>
-    <h1>Hello, World!</h1>
+    <h1>Hello, Employees!</h1>
+    <table>
+    <thead>
+    <tr>
+        <td>id</td><td>Name</td><td>Position</td><td>Empl. date</td><td>Salary</td><td>Chief</td>
+    </tr>
+    </thead>
+    {% for empl in employees %}
+    <tr>
+        <td>{{ empl.id }}</td>
+        <td>{{ empl.username }}</td>
+        <td>{{ empl.position }}</td>
+        <td>{{ empl.employment_date }}</td>
+        <td>{{ empl.salary }}</td>
+        <td>{{ empl.chief }}</td>
+    </tr>
+    {% endfor %}
+    </table>
 </body>
 </html>

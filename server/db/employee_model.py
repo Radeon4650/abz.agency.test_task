@@ -3,11 +3,10 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 from sqlalchemy import Column, Integer, DateTime, VARCHAR, UnicodeText
 
-from db import base
-# base = declarative_base()
+from db import engine
 
 
-class Employee(base):
+class Employee(engine.Model):
     __tablename__ = 'employees'
     id = Column(Integer, nullable=False, primary_key=True, autoincrement=True)
 
