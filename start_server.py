@@ -2,7 +2,7 @@
 Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 
-from . import app
+from server import app
 
 if __name__ == '__main__':
     app.config['DEBUG'] = True

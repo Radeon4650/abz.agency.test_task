@@ -2,11 +2,11 @@
 Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 
+from server import engine, app, Employee
 from faker import Faker
 
-from db import Session, init_test_db, Employee
-
 fake = Faker('ru_RU')
+
 
 def create_random_employee(chief=None):
     username = fake.name()
@@ -24,25 +24,24 @@ def create_random_employee(chief=None):
                     chief=chief, login=login, pwd=pwd, user_pic=user_pic)
 
 
+def add_random_employees(count=1, chief=None):
+    with app.app_context():
+        for i in range(count):
+            employee = create_random_employee(chief)
+            engine.session.add(employee)
+        engine.session.commit()
 
-def add_random_employees(count=1):
-    session = Session()
-    for i in range(count):
-        employee = create_random_employee()
-        session.add(employee)
-    session.commit()
 
 def get_test_employees(count=None):
-    session = Session()
-    if count is None:
-        return session.query(Employee).all()
-    else:
-        return session.query(Employee).limit(count).all()
+    with app.app_context():
+        if count is None:
+            return Employee.query.all()
+        else:
+            return Employee.query.limit(count).all()
 
 
 if __name__ == '__main__':
     print("starting...")
-    # init_test_db()
-    add_random_employees(100)
+    add_random_employees(count=10, chief=53)
     for e in get_test_employees():
         print(e.username)

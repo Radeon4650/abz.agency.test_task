@@ -11,3 +11,5 @@ POSTGRES = {
     }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 engine.init_app(app)
+
+from .routes import *
