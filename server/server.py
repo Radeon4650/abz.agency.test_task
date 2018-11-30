@@ -5,7 +5,6 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 from flask import Flask
 from flask import render_template
 from db import engine, Employee
-from sqlalchemy.orm import sessionmaker
 
 
 app = Flask(__name__)
