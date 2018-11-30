@@ -3,7 +3,7 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 from sqlalchemy import Column, Integer, DateTime, VARCHAR, UnicodeText
 
-from db import engine
+from . import engine
 
 
 class Employee(engine.Model):
