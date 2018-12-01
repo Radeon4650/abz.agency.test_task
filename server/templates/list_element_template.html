@@ -1,0 +1,28 @@
+<div class="accordion mx-3" id="accordion_layout">
+        {% for empl in employees %}
+      <div class="card">
+        <div class="card-header" id="heading{{ empl.id }}">
+          <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#elem{{ empl.id }}" aria-expanded="false" aria-controls="collapseOne">
+              #{{ empl.id }}   {{ empl.username }}
+            </button>
+          </h5>
+        </div>
+        <div id="elem{{ empl.id }}" data-empl-id="{{ empl.id }}" class="collapse" aria-labelledby="heading{{ empl.id }}" data-parent="#accordion_layout">
+          <div class="card-body">
+            <div class="d-flex w-50 flex-row align-items-start">
+                <p class="mb-1  mx-2" >id:{{ empl.id }}</p>
+                <div class="d-flex flex-column align-items-start">
+                    <p class="mb-1">{{ empl.position }}</p>
+                    <small>{{ empl.employment_date }}</small>
+                </div>
+                <div class="d-flex flex-column">
+                    <small>Salary: {{ empl.salary }}</small>
+                    <span class="badge badge-primary badge-pill">Chief:{{ empl.chief }}</span>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+</div>
