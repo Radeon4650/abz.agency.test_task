@@ -1,4 +1,4 @@
-<div class="accordion mx-3" id="accordion_layout">
+<div class="accordion mx-3" id="accordion_layout{{ chief_id }}" >
         {% for empl in employees %}
       <div class="card">
         <div class="card-header" id="heading{{ empl.id }}">
@@ -8,7 +8,7 @@
             </button>
           </h5>
         </div>
-        <div id="elem{{ empl.id }}" data-empl-id="{{ empl.id }}" class="collapse" aria-labelledby="heading{{ empl.id }}" data-parent="#accordion_layout">
+        <div id="elem{{ empl.id }}" data-empl-id="{{ empl.id }}" subs-loaded="false" class="collapse" aria-labelledby="heading{{ empl.id }}" data-parent="#accordion_layout{{ chief_id }}">
           <div class="card-body">
             <div class="d-flex w-50 flex-row align-items-start">
                 <p class="mb-1  mx-2" >id:{{ empl.id }}</p>
@@ -25,4 +25,26 @@
         </div>
       </div>
         {% endfor %}
+
+    <script>
+    $('#accordion_layout{{ chief_id }}').on('shown.bs.collapse', function (event) {
+        var collapse = $(event.target)
+        var subs_loaded = collapse.attr("subs-loaded")
+        if (subs_loaded=='true') {
+            return
+        }
+
+        var empl_id = collapse.data("empl-id")
+
+        $.get("subordinates/"+empl_id, function(data, status)  {
+            // 'shown.bs.collapse' could be called multiple times
+            var is_loaded = collapse.attr("subs-loaded")
+            if (is_loaded == 'false') {
+                console.log("Sub for [ " + empl_id + " ] loaded from ( " + collapse.attr("id") +" )")
+                collapse.attr("subs-loaded", "true")
+                collapse.append(data)
+            }
+        });
+    });
+    </script>
 </div>
