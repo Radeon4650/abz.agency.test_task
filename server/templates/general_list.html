@@ -62,6 +62,15 @@
                 </label>
             </th>
         </tr>
+        <tr>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-id" placeholder="search id" onsearch="searchBy('id', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-username" placeholder="search username" onsearch="searchBy('username', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-position" placeholder="search position" onsearch="searchBy('position', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-employment_date" placeholder="search employment_date" onsearch="searchBy('employment_date', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-salary" placeholder="search salary" onsearch="searchBy('salary', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-chief" placeholder="search chief" onsearch="searchBy('chief', this.value)"></th>
+            <th scope="col"><input type="search" aria-describedby="inputGroup-sizing-sm" class="form-control w-100" id="search-login" placeholder="search login" onsearch="searchBy('login', this.value)"></th>
+        </tr>
         </thead>
 
         <tbody id="empl_table_body" load-offset="0" load-quantity="100" load-order="username">
@@ -95,6 +104,24 @@
         table_body.attr("load-offset", "0")
         $("#empl_table_body tr").remove();
         loadNextEmpls()
+    }
+
+    function searchBy(field, searchValue) {
+        var search_fields = ["id", "username", "position", "employment_date", "salary", "chief", "login"]
+        for (f in search_fields) {
+            if (field != search_fields[f]) {
+                $("#search-"+search_fields[f]).val("")
+            }
+        }
+        if (searchValue == "") {
+            return
+            };
+        var table_body=$("#empl_table_body")
+        $("#empl_table_body tr").remove();
+        $.get("search/field="+field+"&value="+searchValue, function(data, status)  {
+            table_body.append(data);
+            table_body.attr("load-offset", "0")
+        });
     }
 </script>
 </body>

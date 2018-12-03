@@ -12,10 +12,10 @@ def main():
     return render_template('table_template.html', employees=empls, chief_id='undef')
 
 
-@app.route('/list/<offset>')
-def get_list(offset):
+@app.route('/list/')
+def get_list():
     limit = 100
-    empls = Employee.query.order_by(Employee.username).offset(offset).limit(limit).all()
+    empls = Employee.query.order_by(Employee.username).limit(limit).all()
     return render_template('general_list.html', employees=empls)
 
 
@@ -25,6 +25,11 @@ def get_gen_list_content(offset, quantity, order):
     empls = Employee.query.order_by(order).offset(offset).limit(quantity).all()
     return render_template('general_list_content.html', employees=empls)
 
+
+@app.route('/list/search/field=<field>&value=<value>')
+def search_by(field, value):
+    empls = Employee.query.filter(getattr(Employee, field)==value).all()
+    return render_template('general_list_content.html', employees=empls)
 
 
 @app.route('/subordinates/<userid>')
