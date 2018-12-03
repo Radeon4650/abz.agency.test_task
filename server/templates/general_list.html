@@ -1,0 +1,101 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Our employees</title>
+</head>
+<body onload="loadNextEmpls()">
+
+    <h1>Hello, Employees!</h1>
+    <table id="empl_table" class="w-100">
+        <thead>
+                <!--<thead class="btn-group btn-group-toggle" data-toggle="buttons">-->
+
+        <tr data-toggle="buttons">
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('id')">
+                <input class="d-none" type="radio" name="options" id="opt-id" autocomplete="off">
+                    ID
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info  w-100 active" onclick="setNewOrder('username')">
+                <input class="d-none" type="radio" name="options" id="opt-username" autocomplete="off" checked>
+                Username
+            </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('position')">
+                <input class="d-none" type="radio" name="options" id="opt-position" autocomplete="off">
+                    Position
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('employment_date')">
+                <input class="d-none" type="radio" name="options" id="opt-empl-date" autocomplete="off">
+                    Employment date
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('salary')">
+                <input class="d-none" type="radio" name="options" id="opt-salary" autocomplete="off">
+                    Salary
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('chief')">
+                <input class="d-none" type="radio" name="options" id="opt-chief" autocomplete="off">
+                    Chief
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" onclick="setNewOrder('login')">
+                <input class="d-none" type="radio" name="options" id="opt-login" autocomplete="off">
+                    Login
+                </label>
+            </th>
+            <th scope="col">
+                <label class="btn btn-outline-info w-100" role="button" aria-disabled="true">
+                <input class="d-none" type="radio" name="options" id="opt-avatar" autocomplete="off" disabled>
+                    Avatar
+                </label>
+            </th>
+        </tr>
+        </thead>
+
+        <tbody id="empl_table_body" load-offset="0" load-quantity="100" load-order="username">
+        </tbody>
+    </table>
+    <button type="button" onclick="loadNextEmpls()" class="btn btn-outline-success btn-lg btn-block mx-3">Load next</button>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+    function loadNextEmpls() {
+        var table_body=$("#empl_table_body")
+        var load_offset = +table_body.attr("load-offset")
+        var load_quantity = +table_body.attr("load-quantity")
+        var load_order = table_body.attr("load-order")
+        $.get("gen_list_cont/offset="+ load_offset +"&quantity="+ load_quantity + "&order_by=" + load_order, function(data, status)  {
+            table_body.append(data);
+            table_body.attr("load-offset", function( i, val ) {
+                return +val + load_quantity;
+            })
+        });
+    }
+
+    function setNewOrder(order_by) {
+        var table_body=$("#empl_table_body")
+        var load_order = table_body.attr("load-order")
+        if (order_by == load_order) {
+            return
+            };
+        table_body.attr("load-order", order_by)
+        table_body.attr("load-offset", "0")
+        $("#empl_table_body tr").remove();
+        loadNextEmpls()
+    }
+</script>
+</body>
+</html>

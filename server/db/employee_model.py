@@ -1,10 +1,10 @@
 """
 Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
+from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, VARCHAR, UnicodeText
 
 from . import engine
-
 
 class Employee(engine.Model):
     __tablename__ = 'employees'
@@ -21,5 +21,7 @@ class Employee(engine.Model):
 
     user_pic = Column(VARCHAR(255), nullable=True, unique=False)
 
+    def get_date_str(self):
+        return self.employment_date.strftime("%Y-%m-%d")
     def __repr__(self):
         return '<Employee %r>' % self.username

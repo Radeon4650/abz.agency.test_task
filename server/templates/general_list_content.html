@@ -1,0 +1,12 @@
+{% for empl in employees %}
+    <tr>
+        <td>{{ empl.id }}</td>
+        <td>{{ empl.username }}</td>
+        <td>{{ empl.position }}</td>
+        <td>{{ empl.get_date_str() }}</td>
+        <td>{{ empl.salary }}</td>
+        <td>{{ empl.chief }}</td>
+        <td>{{ empl.login }}</td>
+        <td><img src="{{ empl.user_pic }}" width="50" height="50"></td>
+    </tr>
+{% endfor %}
