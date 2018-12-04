@@ -115,52 +115,34 @@
             </button>
           </div>
           <div class="modal-body">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Username:</span>
-                  </div>
-                  <input name="username" type="text" class="form-control" placeholder="username" aria-label="username" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Position:</span>
-                  </div>
-                  <input name="position" type="text" class="form-control" placeholder="position" aria-label="position" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Employment date:</span>
-                  </div>
-                  <input name="employment_date" type="date" class="form-control" placeholder="employment date" aria-label="employment_date" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Salary:</span>
-                  </div>
-                  <input name="salary" type="number" class="form-control" placeholder="salary" aria-label="salary" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Chief:</span>
-                  </div>
-                  <input name="chief" type="number" class="form-control" placeholder="chief" aria-label="chief" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Login:</span>
-                  </div>
-                  <input name="login" type="text" class="form-control" placeholder="login" aria-label="login" required>
-                </div>
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Password:</span>
-                  </div>
-                  <input name="pwd" type="password" class="form-control" placeholder="password" aria-label="password" required>
-                </div>
+              {% include "create_update_dialog_template.html" %}
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" id="update_modal_btn">Create</button>
+            <button type="submit" class="btn btn-primary" id="create_modal_btn">Create</button>
+          </div>
+        </div>
+      </div>
+       </form>
+    </div>
+
+
+    <div class="modal fade" id="update_modal" tabindex="-1" role="dialog" aria-labelledby="update_modal_label" aria-hidden="true">
+       <form id="updateUserForm" method="POST">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update_modal_label">Update record</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="update_body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="update_modal_btn">Update</button>
           </div>
         </div>
       </div>
@@ -220,6 +202,17 @@
         var empl_id = button.data('empl-id')
         $("#deleteUserMessage").html("Do you want to delete user #"+empl_id+"?")
         $('#deleteUserForm').attr("action", "delete/id=" + empl_id)
+    });
+
+    $('#update_modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var empl_id = button.data('empl-id')
+        update_body = $("#update_body")
+
+        $('#updateUserForm').attr("action", "update/id=" + empl_id)
+        $.get("update/id="+empl_id, function(data, status)  {
+            update_body.html(data);
+        });
     });
 </script>
 </body>

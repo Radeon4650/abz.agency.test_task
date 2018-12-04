@@ -50,13 +50,22 @@ def delete(id):
     return redirect("/list/")
 
 
-# @app.route("/list/update/id=<id>", methods=["GET", "POST"])
-# def update(id):
-#     print ('Update:', id)
-#     if request.method == 'GET':
-#         Employee.query.filter(Employee.id == id).first()
-#     else:
-#         return redirect("/list/")
+@app.route("/list/update/id=<id>", methods=["GET", "POST"])
+def update(id):
+    print('Update:', id)
+    e = Employee.query.filter(Employee.id == id).first()
+    if request.method == 'GET':
+        return render_template('create_update_dialog_template.html', employee=e)
+    else:
+        e.username = request.form['username']
+        e.position = request.form['position']
+        e.employment_date = request.form['employment_date']
+        e.salary = request.form['salary']
+        e.chief = request.form['chief']
+        e.login = request.form['login']
+        e.pwd = request.form['pwd']
+        engine.session.commit()
+        return redirect("/list/")
 
 
 @app.route("/list/create/", methods=["POST"])

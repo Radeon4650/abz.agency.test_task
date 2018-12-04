@@ -1,0 +1,42 @@
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Username:</span>
+  </div>
+  <input name="username" type="text" {% if employee %} value="{{ employee.username }}" {% endif %} class="form-control" placeholder="username" aria-label="username" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Position:</span>
+  </div>
+  <input name="position" type="text" {% if employee %} value="{{ employee.position }}" {% endif %} class="form-control" placeholder="position" aria-label="position" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Employment date:</span>
+  </div>
+  <input name="employment_date" type="date" {% if employee %} value="{{ employee.get_date_str() }}" {% endif %} class="form-control" placeholder="employment date" aria-label="employment_date" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Salary:</span>
+  </div>
+  <input name="salary" type="number" {% if employee %} value="{{ employee.salary }}" {% endif %} class="form-control" placeholder="salary" aria-label="salary" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Chief:</span>
+  </div>
+  <input name="chief" type="number" {% if employee %} value="{{ employee.chief }}" {% endif %} class="form-control" placeholder="chief" aria-label="chief" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Login:</span>
+  </div>
+  <input name="login" type="text" {% if employee %} value="{{ employee.login }}" {% endif %} class="form-control" placeholder="login" aria-label="login" required>
+</div>
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Password:</span>
+  </div>
+  <input name="pwd" type="password" {% if employee %} value="{{ employee.pwd }}" {% endif %} class="form-control" placeholder="password" aria-label="password" required>
+</div>
