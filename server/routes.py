@@ -2,8 +2,8 @@
 Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 
-from flask import render_template
-from . import app, Employee
+from flask import render_template, redirect
+from . import app, Employee, engine
 
 
 @app.route('/')
@@ -30,6 +30,27 @@ def get_gen_list_content(offset, quantity, order):
 def search_by(field, value):
     empls = Employee.query.filter(getattr(Employee, field)==value).all()
     return render_template('general_list_content.html', employees=empls)
+
+
+@app.route("/list/delete/id=<id>", methods=["POST"])
+def delete(id):
+    # try:
+        print ('Delete:', id)
+    # setting new chief to subordinates
+        todel = Employee.query.filter(Employee.id == id).first()
+        chief = todel.chief
+        if chief == id:
+            for empl in Employee.query.filter(Employee.chief==id).all():
+                empl.chief = empl.id
+        else:
+            for empl in Employee.query.filter(Employee.chief==id).all():
+                empl.chief = chief
+    # deleting record
+        engine.session.delete(todel)
+        engine.session.commit()
+        return redirect("/list/")
+    # except:
+    #     return redirect("/list/")
 
 
 @app.route('/subordinates/<userid>')

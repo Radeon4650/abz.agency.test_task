@@ -1,7 +1,19 @@
 {% for empl in employees %}
     <tr>
         <td>{{ empl.id }}</td>
-        <td>{{ empl.username }}</td>
+        <td>
+            <div class="d-flex flex-row">
+                <div class="d-flex flex-column align-middle">
+                    <div class="w-100 d-inline-block">
+                        <button type="button" class="btn btn-primary btn-sm">update</button>
+                    </div>
+                    <div class="w-100 d-inline-block">
+                        <button type="button" class="btn btn-danger btn-sm" data-empl-id="{{ empl.id }}" data-toggle="modal" data-target="#delete_modal">delete</button>
+                    </div>
+                </div>
+                <div class="p-1">{{ empl.username }}</div>
+            </div>
+        </td>
         <td>{{ empl.position }}</td>
         <td>{{ empl.get_date_str() }}</td>
         <td>{{ empl.salary }}</td>
