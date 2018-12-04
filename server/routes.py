@@ -2,7 +2,7 @@
 Author: Mariia Shatalova (radeon4650main@gmail.com)
 """
 
-from flask import render_template, redirect
+from flask import render_template, redirect, request
 from . import app, Employee, engine
 
 
@@ -34,23 +34,44 @@ def search_by(field, value):
 
 @app.route("/list/delete/id=<id>", methods=["POST"])
 def delete(id):
-    # try:
-        print ('Delete:', id)
+    print ('Delete:', id)
     # setting new chief to subordinates
-        todel = Employee.query.filter(Employee.id == id).first()
-        chief = todel.chief
-        if chief == id:
-            for empl in Employee.query.filter(Employee.chief==id).all():
-                empl.chief = empl.id
-        else:
-            for empl in Employee.query.filter(Employee.chief==id).all():
-                empl.chief = chief
+    todel = Employee.query.filter(Employee.id == id).first()
+    chief = todel.chief
+    if chief == id:
+        for empl in Employee.query.filter(Employee.chief==id).all():
+            empl.chief = empl.id
+    else:
+        for empl in Employee.query.filter(Employee.chief==id).all():
+            empl.chief = chief
     # deleting record
-        engine.session.delete(todel)
-        engine.session.commit()
-        return redirect("/list/")
-    # except:
-    #     return redirect("/list/")
+    engine.session.delete(todel)
+    engine.session.commit()
+    return redirect("/list/")
+
+
+# @app.route("/list/update/id=<id>", methods=["GET", "POST"])
+# def update(id):
+#     print ('Update:', id)
+#     if request.method == 'GET':
+#         Employee.query.filter(Employee.id == id).first()
+#     else:
+#         return redirect("/list/")
+
+
+@app.route("/list/create/", methods=["POST"])
+def create():
+    print ('Create...')
+    new_user = Employee(username=request.form['username'],
+        position=request.form['position'],
+        employment_date=request.form['employment_date'],
+        salary=request.form['salary'],
+        chief=request.form['chief'],
+        login=request.form['login'],
+        pwd=request.form['pwd'])
+    engine.session.add(new_user)
+    engine.session.commit()
+    return redirect("/list/")
 
 
 @app.route('/subordinates/<userid>')
