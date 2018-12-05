@@ -1,10 +1,10 @@
-###Project information
+### Project information
 This is the solution for test task of abz.agency for Python Developer position.
 Full description and requirements are described in ```Test Task Junior Python Developer.pdf```
 The list of already accomplished task parts is given in ```Issues``` tab of this repository.
 
 
-####Create and setup of Postgre DB for project:
+#### Create and setup of Postgre DB for project:
 1. Run Postgre server, in command line execute command:
     ```bash
     CREATE DATABASE test_db;
@@ -27,7 +27,7 @@ The list of already accomplished task parts is given in ```Issues``` tab of this
     test_db_setup.py```
 
 
-####Package requirements:
+#### Package requirements:
 >* Python 3.7
 >* flask
 >* flask_script
@@ -36,7 +36,7 @@ The list of already accomplished task parts is given in ```Issues``` tab of this
 >* psycopg2
 >* faker
 
-####Server start:
+#### Server start:
 1. At first, make settings for your Postgre DB in ```/server/__init__.py```
 2. To start server run script ```start_server.py```
    
@@ -46,7 +46,7 @@ The list of already accomplished task parts is given in ```Issues``` tab of this
    The overall list of employees with all available information is located at:
    ```http://127.0.0.1:5000/list/```
    
-####CRUD, search and sorting at server:
+#### CRUD, search and sorting at server:
 To execute CRUD operations you need to go to the overall list of employees (see above).
 * To CREATE new record press ```Create new record``` button at the top-left corner of the page.
 * To UPDATE existing record press related ```update``` button near Username in the record you would like to change.
