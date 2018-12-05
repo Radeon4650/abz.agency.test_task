@@ -3,7 +3,7 @@
       <div class="card">
         <div class="card-header" id="heading{{ empl.id }}">
           <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#elem{{ empl.id }}"
+            <button class="btn btn-link text-dark" type="button" data-toggle="collapse" data-target="#elem{{ empl.id }}"
                     aria-expanded="false" aria-controls="collapseOne">
               #{{ empl.id }}   {{ empl.username }}   ▼
             </button>
@@ -13,8 +13,7 @@
              subs-loaded="false" class="collapse" aria-labelledby="heading{{ empl.id }}"
              data-parent="#accordion_layout{{ chief_id }}">
           <div class="d-flex flex-column align-items-start ml-5 mt-2">
-            <h6>{{ empl.position }}</h6>
-            <!--<p><u>Subordinates:</u></p>-->
+            <h6 class="text-secondary">{{ empl.position }}</h6>
           </div>
         </div>
       </div>
