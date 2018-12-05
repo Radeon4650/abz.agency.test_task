@@ -4,6 +4,7 @@ Author: Mariia Shatalova (radeon4650main@gmail.com)
 
 from server import engine, app, Employee
 from faker import Faker
+from sqlalchemy import exc
 
 fake = Faker('ru_RU')
 
@@ -27,9 +28,19 @@ def create_random_employee(chief=None):
 def add_random_employees(count=1, chief=None):
     with app.app_context():
         for i in range(count):
-            employee = create_random_employee(chief)
-            engine.session.add(employee)
-        engine.session.commit()
+            added = False
+            while not added:
+                try:
+                    employee = create_random_employee(chief)
+                    engine.session.add(employee)
+                    engine.session.commit()
+                    added = True
+                except exc.DataError:
+                    engine.session.rollback()
+                    added = False
+                except exc.IntegrityError:
+                    engine.session.rollback()
+                    added = False
 
 
 def get_test_employees(count=None):
@@ -42,6 +53,17 @@ def get_test_employees(count=None):
 
 if __name__ == '__main__':
     print("starting...")
-    add_random_employees(count=10, chief=53)
-    for e in get_test_employees():
-        print(e.username)
+
+    shift = 1
+    for i in range(1, 11):
+        add_random_employees(count=1, chief=i)
+
+    for i in range(5):
+        for e in get_test_employees():
+            if shift > e.id: continue
+            shift = e.id
+            add_random_employees(count=10, chief=shift)
+        shift += 1
+
+    # for e in get_test_employees():
+    #     print(e.id)
