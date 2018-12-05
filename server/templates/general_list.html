@@ -8,9 +8,13 @@
 <body onload="loadNextEmpls()">
 
     <h1>Hello, Employees!</h1>
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create_modal">Create new record</button>
 
-    <table id="empl_table" class="w-100">
+    <div class="d-flex mx-4 w-90 justify-content-between">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#create_modal">Create new record</button>
+        <a href="/">List of all employees</a>
+    </div>
+
+    <table id="empl_table" class="w-90 mx-4">
         <thead>
 
         <tr data-toggle="buttons">
@@ -77,7 +81,9 @@
         <tbody id="empl_table_body" load-offset="0" load-quantity="100" load-order="username">
         </tbody>
     </table>
-    <button type="button" onclick="loadNextEmpls()" class="btn btn-outline-success btn-lg btn-block mx-3">Load next</button>
+    <div class="d-flex mx-4 w-90">
+        <button type="button" onclick="loadNextEmpls()" class="btn btn-outline-success btn-lg btn-block">Load next</button>
+    </div>
 
 
 
