@@ -16,7 +16,7 @@ class Employee(engine.Model):
     salary = Column(Integer, nullable=False, unique=False)
     chief = Column(Integer, nullable=False, unique=False)
 
-    login = Column(VARCHAR(40), unique=True)
+    login = Column(VARCHAR(40), nullable=False, unique=True)
     pwd = Column(VARCHAR(80), nullable=False, unique=False)
 
     user_pic = Column(VARCHAR(255), nullable=True, unique=False)
