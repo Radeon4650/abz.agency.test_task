@@ -13,8 +13,46 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request, url_for, flash, session, g
 from . import app, Employee, engine
+import functools
+
+
+@app.route('/login', methods=('GET', 'POST'))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        error = None
+
+        if username != 'admin':
+            error = 'Incorrect username.'
+        elif password != '1234':
+            error = 'Incorrect password.'
+
+        if error is None:
+            session.clear()
+            session['user'] = username
+            return redirect(url_for('get_list'))
+
+        flash(error)
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('main'))
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if not session.get('user'):
+            return redirect(url_for('login'))
+
+        return view(*args, **kwargs)
+    return wrapped_view
 
 
 @app.route('/')
@@ -24,6 +62,7 @@ def main():
 
 
 @app.route('/list/')
+@login_required
 def get_list():
     limit = 100
     empls = Employee.query.order_by(Employee.username).limit(limit).all()

@@ -10,6 +10,7 @@ POSTGRES = {
         'port': '5432',
     }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\%(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['SECRET_KEY'] = 'dev'
 engine.init_app(app)
 
 from .routes import *
